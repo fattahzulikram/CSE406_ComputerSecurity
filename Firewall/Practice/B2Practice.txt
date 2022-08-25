@@ -1,0 +1,32 @@
+// eth0 is 10.9.0.0 (external), eth1 is 192.168.60 (internal)
+// Router Rules (Inter-network)
+// Task 1
+iptables -A FORWARD -i eth1 -p tcp --dport 22 -j DROP
+iptables -A FORWARD -i eth0 -p tcp --sport 22 -j DROP
+
+// Task 2
+iptables -A INPUT -p tcp --dport 22 -d 10.9.0.11 -j DROP
+iptables -A INPUT -p tcp --dport 22 -d 192.168.60.11 -j DROP
+
+// Task 4
+iptables -A FORWARD -i eth0 -s 10.9.0.5 -d 192.168.60.6 -p tcp --dport 23 -j ACCEPT
+iptables -A FORWARD -i eth1 -s 192.168.60.6 -d 10.9.0.5 -p tcp --sport 23 -j ACCEPT
+
+// Specific Machine Rules
+// All external hosts
+// Task 3
+iptables -A INPUT -p tcp --dport 22 -j DROP
+
+// 10.9.0.1
+// Task 6
+iptables -A OUTPUT -p icmp --icmp-type echo-request -j DROP
+
+// Task 7
+iptables -A INPUT -p icmp --icmp-type echo-request -j DROP
+
+// All machines but 10.9.0.5
+// Task 5
+iptables -A OUTPUT -p tcp --dport 23 -j DROP
+// Task 8
+iptables -A OUTPUT -p icmp --icmp-type echo-request -j DROP
+

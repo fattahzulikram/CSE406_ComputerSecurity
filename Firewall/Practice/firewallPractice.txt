@@ -1,0 +1,7 @@
+1. External cannot connect to internal via Telnet
+2. No host cannot connect to router via Telnet
+3. Internals can connect to each other via Telnet
+4. Machine with IP address 10.9.0.5 can connect to 192.168.60.6 via TELNET
+5. Machine with IP address 10.9.0.1 can’t ping any other machine
+6. Machine with IP address 10.9.0.5 can ping all other machines (except 10.9.0.1)
+7. No other machine can ping any other machine.

@@ -1,0 +1,28 @@
+// Router
+// 4
+iptables -A FORWARD -i eth0 -s 10.9.0.5 -d 192.168.60.6 -p tcp --dport 23 -j ACCEPT
+iptables -A FORWARD -i eth1 -d 10.9.0.5 -s 192.168.60.6 -p tcp --sport 23 -j ACCEPT
+
+// 1
+iptables -A FORWARD -i eth0 -p tcp --dport 23 -j DROP
+iptables -A FORWARD -i eth1 -p tcp --sport 23 -j DROP
+
+// 2
+iptables -A INPUT -p tcp -d 10.9.0.11 --dport 23 -j DROP
+iptables -A INPUT -p tcp -d 192.168.60.11 --dport 23 -j DROP
+
+
+// Specific device
+// 10.9.0.1
+// 5
+iptables -A OUTPUT -p icmp --icmp-type echo-request -j DROP
+// 6
+iptables -A INPUT -p icmp --icmp-type echo-request -j DROP
+
+// All except 10.9.0.5
+// 7
+iptables -A OUTPUT -p icmp --icmp-type echo-request -j DROP
+
+iptables -P OUTPUT ACCEPT
+iptables -P INPUT ACCEPT
+iptables -P FORWARD ACCEPT
